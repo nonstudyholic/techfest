@@ -1,0 +1,55 @@
+/* ===== DESIGN TOKENS (Augmented Mode default, Stealth Mode override) ===== */
+:root{
+  --void:#0A0A0F; --accent:#00F0FF; --alert:#FF0055; --chrome:#C9D1D9; --muted:#9AA5B1;
+  --glass:rgba(16,18,28,.62); --line:rgba(0,240,255,.28);
+  --glow:0 0 18px rgba(0,240,255,.45);
+}
+:root[data-mode="stealth"]{
+  --accent:#D5DAE0; --alert:#8A94A0; --line:rgba(213,218,224,.25); --glow:0 0 10px rgba(213,218,224,.2);
+}
+:root{box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+html{scroll-behavior:smooth;scroll-padding-top:80px}
+body{background:var(--void);color:var(--chrome);font-family:'Space Grotesk',sans-serif;overflow-x:hidden;transition:filter .5s}
+:root[data-mode="stealth"] body{filter:saturate(.15)}
+/* Scanline + noise overlay */
+body::after{content:"";position:fixed;inset:0;pointer-events:none;z-index:60;
+  background:repeating-linear-gradient(0deg,rgba(255,255,255,.025) 0 1px,transparent 1px 3px);mix-blend-mode:overlay}
+/* Laser grid floor */
+.grid-bg{position:fixed;inset:0;z-index:0;pointer-events:none;
+  background-image:linear-gradient(var(--line) 1px,transparent 1px),linear-gradient(90deg,var(--line) 1px,transparent 1px);
+  background-size:56px 56px;opacity:.14;mask-image:radial-gradient(ellipse at 50% 30%,#000 20%,transparent 75%);
+  animation:grid 6s linear infinite}
+@keyframes grid{to{background-position:0 56px,56px 0}}
+.glass{background:var(--glass);backdrop-filter:blur(14px) saturate(140%);-webkit-backdrop-filter:blur(14px) saturate(140%);border:1px solid var(--line)}
+.glow-text{color:var(--accent);text-shadow:var(--glow)}
+.neon-btn{position:relative;padding:.9rem 1.6rem;font:700 .8rem 'Orbitron';letter-spacing:.14em;text-transform:uppercase;
+  clip-path:polygon(0 0,calc(100% - 14px) 0,100% 14px,100% 100%,14px 100%,0 calc(100% - 14px));transition:.25s}
+.neon-primary{background:var(--accent);color:#00131a}
+.neon-primary:hover{box-shadow:0 0 30px var(--accent);transform:translateY(-2px)}
+.neon-ghost{border:1px solid var(--accent);color:var(--accent)}
+.neon-ghost:hover{background:rgba(0,240,255,.1);box-shadow:inset 0 0 20px rgba(0,240,255,.25),var(--glow)}
+:focus-visible{outline:2px solid var(--alert);outline-offset:3px}
+/* Reveal on scroll */
+.reveal{opacity:0;transform:translateY(28px);transition:opacity .8s,transform .8s}
+.reveal.in{opacity:1;transform:none}
+/* Event cards with neon gradient border + tilt */
+.card{position:relative;transform-style:preserve-3d;transition:transform .15s;border-radius:4px}
+.card::before{content:"";position:absolute;inset:-1px;border-radius:5px;padding:1px;z-index:-1;opacity:.35;transition:opacity .3s;
+  background:linear-gradient(135deg,var(--accent),transparent 40%,var(--alert));
+  -webkit-mask:linear-gradient(#000 0 0) content-box,linear-gradient(#000 0 0);-webkit-mask-composite:xor;mask-composite:exclude}
+.card:hover::before{opacity:1}
+.card:hover{box-shadow:0 0 40px -10px var(--accent)}
+.chip[aria-pressed="true"]{background:var(--accent);color:#00131a}
+/* Timeline */
+.tl-line{background:linear-gradient(var(--accent),var(--alert))}
+.node{box-shadow:0 0 0 4px var(--void),0 0 16px var(--accent)}
+/* Sponsors */
+.sp{filter:grayscale(1);transition:.3s;border:1px solid rgba(201,209,217,.15)}
+.sp:hover{border-color:var(--accent);box-shadow:var(--glow);color:#fff}
+/* Reticle cursor (fine pointers only) */
+#reticle{position:fixed;left:0;top:0;width:34px;height:34px;margin:-17px 0 0 -17px;border:1px solid var(--accent);border-radius:50%;
+  pointer-events:none;z-index:100;transition:width .2s,height .2s,margin .2s,border-color .2s;display:none}
+#reticle::after{content:"";position:absolute;left:50%;top:50%;width:4px;height:4px;margin:-2px;background:var(--alert);border-radius:50%}
+#reticle.hot{width:56px;height:56px;margin:-28px 0 0 -28px;border-color:var(--alert)}
+@media (pointer:fine){#reticle{display:block} body{cursor:none} a,button{cursor:none}}
+@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}.reveal{opacity:1;transform:none}}

@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Techfest IIT Bombay 2026 — Augmented Humanity</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700;900&family=Space+Grotesk:wght@400;500;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<script src="https://cdn.tailwindcss.com/3.4.17"></script>
+<script src="js/tailwind-config.js"></script>
+<link rel="stylesheet" href="css/styles.css">
+</head>
+<body class="font-body antialiased">
+<div class="grid-bg" aria-hidden="true"></div>
+<canvas id="particles" class="fixed inset-0 z-0 pointer-events-none" aria-hidden="true"></canvas>
+<div id="reticle" aria-hidden="true"></div>
+
+<!-- ========== NAV ========== -->
+<header class="fixed top-0 inset-x-0 z-50 glass" style="padding-top:env(safe-area-inset-top,0px)">
+  <nav class="max-w-7xl mx-auto flex items-center justify-between px-5 py-3" aria-label="Primary">
+    <a href="#top" class="font-head font-black tracking-widest text-white">TECH<span class="glow-text">FEST</span></a>
+    <ul class="hidden md:flex gap-7 font-mono text-xs uppercase tracking-widest text-chrome">
+      <li><a class="hover:text-cy" href="#about">About</a></li>
+      <li><a class="hover:text-cy" href="#events">Events</a></li>
+      <li><a class="hover:text-cy" href="#timeline">Timeline</a></li>
+      <li><a class="hover:text-cy" href="#diagnostics">Core</a></li>
+      <li><a class="hover:text-cy" href="#partners">Partners</a></li>
+    </ul>
+    <button id="modeBtn" class="font-mono text-xs border border-[var(--line)] px-3 py-2 text-white hover:border-cy" aria-pressed="false">
+      MODE: <span id="modeLabel" class="glow-text">AUGMENTED</span>
+    </button>
+  </nav>
+</header>
+
+<main id="top" class="relative z-10">
+<!-- ========== HERO ========== -->
+<section class="min-h-screen flex items-center pt-24 pb-16 px-5">
+  <div class="max-w-7xl mx-auto grid lg:grid-cols-2 gap-10 items-center w-full">
+    <div>
+      <p class="font-mono text-xs sm:text-sm glow-text mb-4">&gt; SYS.BOOT // IIT BOMBAY // ASIA’S LARGEST SCI-TECH FEST<span class="animate-blink">_</span></p>
+      <h1 class="font-head font-black text-white leading-[1.05] text-4xl sm:text-6xl xl:text-7xl">
+        TECHFEST<br><span class="glow-text">2026</span>
+      </h1>
+      <p class="font-head text-lg sm:text-2xl mt-4 tracking-wide text-chrome">Human <span class="text-mg" style="color:var(--alert)">×</span> Synthetic — <em class="not-italic text-white">Augment Reality</em></p>
+      <p class="mt-5 max-w-xl text-[#B8C2CC] leading-relaxed">Three days where intellect fuses with machine. Robotics, AI, and bold ideas converge on the IIT Bombay campus.</p>
+
+      <!-- Countdown -->
+      <div id="countdown" class="grid grid-cols-4 gap-3 mt-8 max-w-md" role="timer" aria-live="off" aria-label="Countdown to Techfest 2026">
+        <!-- filled by JS -->
+      </div>
+      <p class="font-mono text-[11px] text-[#9AA5B1] mt-2">T-MINUS to opening ceremony · 16–18 DEC 2026</p>
+
+      <div class="flex flex-wrap gap-4 mt-8">
+        <a href="#register" class="neon-btn neon-primary">Register Now</a>
+        <a href="#events" class="neon-btn neon-ghost">Explore Events</a>
+      </div>
+    </div>
+
+    <!-- Augmented eye HUD (SVG) -->
+    <div class="relative mx-auto w-full max-w-[460px] aspect-square" id="eyeWrap">
+      <svg viewBox="0 0 400 400" class="w-full h-full" role="img" aria-label="Augmented cybernetic eye HUD">
+        <defs>
+          <radialGradient id="iris"><stop offset="0" stop-color="#fff"/><stop offset=".25" stop-color="var(--accent)"/><stop offset="1" stop-color="#003a44"/></radialGradient>
+        </defs>
+        <g fill="none" stroke="var(--accent)" stroke-width="1.2">
+          <g class="animate-spin2" style="transform-origin:200px 200px"><circle cx="200" cy="200" r="185" stroke-dasharray="3 9" opacity=".7"/><circle cx="200" cy="200" r="170" stroke="var(--alert)" stroke-dasharray="60 30" opacity=".8"/></g>
+          <g style="transform-origin:200px 200px;animation:spin2 14s linear infinite reverse"><circle cx="200" cy="200" r="145" stroke-dasharray="2 6"/><path d="M200 50v22M200 328v22M50 200h22M328 200h22" stroke-width="2"/></g>
+          <path d="M60 200Q200 90 340 200Q200 310 60 200Z" stroke-width="2"/>
+          <path d="M90 200Q200 130 310 200" opacity=".4"/><path d="M90 200Q200 270 310 200" opacity=".4"/>
+        </g>
+        <g id="pupil"><circle cx="200" cy="200" r="52" fill="url(#iris)" opacity=".9"/><circle cx="200" cy="200" r="52" fill="none" stroke="#fff" stroke-opacity=".5"/><circle cx="200" cy="200" r="20" fill="#05060a"/><circle cx="212" cy="188" r="6" fill="#fff"/></g>
+        <g font-family="JetBrains Mono" font-size="9" fill="var(--accent)"><text x="20" y="30">OPTIC.LINK // 99.2%</text><text x="270" y="385">LAT 19.1334 N / 72.9133 E</text><text x="20" y="385" fill="var(--alert)">● REC</text></g>
+      </svg>
+    </div>
+  </div>
+</section>
+
+<!-- ========== ABOUT ========== -->
+<section id="about" class="px-5 py-24">
+  <div class="max-w-5xl mx-auto grid md:grid-cols-5 gap-10">
+    <div class="md:col-span-2 reveal">
+      <p class="font-mono text-xs glow-text">// 01 — ORIGIN LOG</p>
+      <h2 class="font-head font-bold text-3xl sm:text-4xl text-white mt-3">Mind meets <span class="glow-text">machine</span></h2>
+    </div>
+    <div class="md:col-span-3 glass p-6 sm:p-8 reveal">
+      <p class="leading-relaxed text-[#C9D1D9]">Since 1998, Techfest has been where India’s sharpest engineers, makers and dreamers meet. The 2026 edition asks one question: what happens when human intellect is amplified, not replaced? Explore prosthetic robotics, neural interfaces, and autonomous systems — built, broken and rebuilt by you.</p>
+      <dl class="grid grid-cols-3 gap-4 mt-8 text-center font-mono">
+        <div><dt class="text-xs text-[#9AA5B1]">FOOTFALL</dt><dd class="font-head text-2xl glow-text" data-count="150000">0</dd></div>
+        <div><dt class="text-xs text-[#9AA5B1]">COLLEGES</dt><dd class="font-head text-2xl glow-text" data-count="2000">0</dd></div>
+        <div><dt class="text-xs text-[#9AA5B1]">PRIZE ₹ (LAKH)</dt><dd class="font-head text-2xl glow-text" data-count="60">0</dd></div>
+      </dl>
+      <p class="font-mono text-[11px] text-[#9AA5B1] mt-4">Figures are illustrative placeholders.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ========== EVENTS ========== -->
+<section id="events" class="px-5 py-24">
+  <div class="max-w-7xl mx-auto">
+    <p class="font-mono text-xs glow-text reveal">// 02 — MODULE INDEX</p>
+    <h2 class="font-head font-bold text-3xl sm:text-4xl text-white mt-3 reveal">Event clusters</h2>
+    <div class="flex flex-wrap gap-2 mt-6" role="group" aria-label="Filter events" id="filters">
+      <button class="chip font-mono text-xs border border-[var(--line)] px-4 py-2 text-white" data-f="all" aria-pressed="true">ALL</button>
+      <button class="chip font-mono text-xs border border-[var(--line)] px-4 py-2 text-white" data-f="robotics" aria-pressed="false">ROBOTICS</button>
+      <button class="chip font-mono text-xs border border-[var(--line)] px-4 py-2 text-white" data-f="management" aria-pressed="false">TECHNOMANAGEMENT</button>
+      <button class="chip font-mono text-xs border border-[var(--line)] px-4 py-2 text-white" data-f="lectures" aria-pressed="false">LECTURES</button>
+      <button class="chip font-mono text-xs border border-[var(--line)] px-4 py-2 text-white" data-f="competitions" aria-pressed="false">COMPETITIONS</button>
+      <button class="chip font-mono text-xs border border-[var(--line)] px-4 py-2 text-white" data-f="workshops" aria-pressed="false">WORKSHOPS</button>
+    </div>
+    <div id="grid" class="grid sm:grid-cols-2 lg:grid-cols-3 gap-6 mt-8" style="perspective:1000px"></div>
+  </div>
+</section>
+
+<!-- ========== TIMELINE ========== -->
+<section id="timeline" class="px-5 py-24">
+  <div class="max-w-3xl mx-auto">
+    <p class="font-mono text-xs glow-text reveal">// 03 — SEQUENCE</p>
+    <h2 class="font-head font-bold text-3xl sm:text-4xl text-white mt-3 mb-12 reveal">Cyber timeline</h2>
+    <ol id="tl" class="relative pl-10"><span class="tl-line absolute left-[11px] top-0 bottom-0 w-px" aria-hidden="true"></span></ol>
+  </div>
+</section>
+
+<!-- ========== DIAGNOSTICS WIDGET ========== -->
+<section id="diagnostics" class="px-5 py-24">
+  <div class="max-w-5xl mx-auto glass p-6 sm:p-10 reveal">
+    <p class="font-mono text-xs glow-text">// 04 — CORE DIAGNOSTIC</p>
+    <h2 class="font-head font-bold text-2xl sm:text-3xl text-white mt-2">Cyborg component scanner</h2>
+    <div class="grid md:grid-cols-2 gap-8 mt-6">
+      <div class="flex flex-col gap-2" role="tablist" aria-label="Components" id="parts"></div>
+      <div aria-live="polite" class="font-mono text-sm border border-[var(--line)] p-5 bg-black/30">
+        <p id="pName" class="font-head text-lg text-white"></p>
+        <p id="pDesc" class="mt-2 text-[#B8C2CC]"></p>
+        <div class="mt-5 h-2 bg-white/10"><div id="pBar" class="h-full transition-all duration-700" style="background:var(--accent);box-shadow:var(--glow)"></div></div>
+        <p class="mt-2 text-xs text-[#9AA5B1]">INTEGRITY: <span id="pVal" class="glow-text"></span>%</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ========== PARTNERS ========== -->
+<section id="partners" class="px-5 py-24">
+  <div class="max-w-7xl mx-auto">
+    <p class="font-mono text-xs glow-text reveal">// 05 — ALLIANCE MATRIX</p>
+    <h2 class="font-head font-bold text-3xl sm:text-4xl text-white mt-3 mb-8 reveal">Sponsors &amp; partners</h2>
+    <div id="sp" class="grid grid-cols-2 md:grid-cols-3 gap-4"></div>
+  </div>
+</section>
+
+<!-- ========== REGISTER CTA ========== -->
+<section id="register" class="px-5 py-24">
+  <div class="max-w-3xl mx-auto text-center glass p-10 reveal">
+    <h2 class="font-head font-black text-3xl sm:text-4xl text-white">Ready to <span class="glow-text">jack in?</span></h2>
+    <p class="mt-3 text-[#B8C2CC]">Registrations open on the official Techfest portal.</p>
+    <a href="https://techfest.org" rel="noopener" class="neon-btn neon-primary inline-block mt-6">Register at techfest.org</a>
+  </div>
+</section>
+</main>
+
+<!-- ========== FOOTER ========== -->
+<footer class="relative z-10 border-t border-[var(--line)] bg-black/60 px-5 py-10 font-mono text-xs">
+  <div class="max-w-7xl mx-auto grid md:grid-cols-3 gap-8">
+    <div>
+      <p class="glow-text">root@techfest:~$ ls links</p>
+      <ul class="mt-2 space-y-1 text-chrome"><li><a class="hover:text-cy" href="#events">./events</a></li><li><a class="hover:text-cy" href="#timeline">./timeline</a></li><li><a class="hover:text-cy" href="#partners">./partners</a></li></ul>
+    </div>
+    <div>
+      <p class="glow-text">root@techfest:~$ ls social</p>
+      <ul class="mt-2 space-y-1 text-chrome"><li><a class="hover:text-cy" href="https://www.instagram.com/techfest_iitbombay/" rel="noopener" target="_blank">./instagram <span class="text-[#9AA5B1]">techfest_iitbombay</span></a></li><li><a class="hover:text-cy" href="https://x.com/Techfest_IITB" rel="noopener" target="_blank">./x <span class="text-[#9AA5B1]">@Techfest_IITB</span></a></li><li><a class="hover:text-cy" href="https://www.youtube.com/@iitbombay_techfest" rel="noopener" target="_blank">./youtube <span class="text-[#9AA5B1]">@iitbombay_techfest</span></a></li><li><a class="hover:text-cy" href="https://www.facebook.com/search/top?q=Techfest%2C%20IIT%20Bombay" rel="noopener" target="_blank">./facebook <span class="text-[#9AA5B1]">Techfest, IIT Bombay</span></a></li></ul>
+    </div>
+    <div>
+      <p class="glow-text">root@techfest:~$ diag --live</p>
+      <p class="mt-2 text-chrome">UPTIME <span id="up">00:00:00</span></p>
+      <p class="text-chrome">CPU <span id="cpu">--</span>% · NET <span id="net">--</span> ms</p>
+      <p class="text-chrome">STATUS <span style="color:var(--alert)">● ONLINE</span></p>
+    </div>
+  </div>
+  <p class="max-w-7xl mx-auto mt-8 text-[#9AA5B1]">© <span id="yr"></span> Techfest, IIT Bombay — an unofficial concept design. All systems nominal.</p>
+</footer>
+
+<script src="js/main.js" defer></script>
+</body>
+</html>
